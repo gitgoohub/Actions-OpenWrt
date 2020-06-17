@@ -64,14 +64,13 @@ jobs:
         df -hT $PWD
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
+        git clone -b master https://github.com/vernesong/OpenClash.git openwrt/package/OpenClash
 
     - name: Load custom feeds
       run: |
         [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
         chmod +x $DIY_P1_SH
         cd openwrt
-        [ -d package/OpenClash ] && rm -rf package/OpenClash
-        git clone -b master https://github.com/vernesong/OpenClash.git package/OpenClash
         $GITHUB_WORKSPACE/$DIY_P1_SH
 
     - name: Update feeds
